@@ -1,5 +1,4 @@
 // 发现
-// ignore_for_file: unused_element, unnecessary_string_interpolations
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intelligent_customer_service/public_unit/waterfalls.dart';
@@ -122,19 +121,22 @@ class EditChannel extends ConsumerStatefulWidget {
 }
 
 class _EditChannelState extends ConsumerState<EditChannel> {
-  // 频道列表
-  late List<String> _items = ref.watch(ChannelList);
 
-  // 已选的频道列表
-  late List<int> _SelectedChannel = ref.watch(SelectedChannel);
-  // 未选的频道列表
-  late List<int> _NoSelectChannel = ref.watch(NoSelectChannel);
 
   // 是否进入频道编辑
   bool _isChannelEditLocation = false;
 
   @override
   Widget build(BuildContext context) {
+
+    // 频道列表
+    List<String> _items = ref.watch(ChannelList);
+
+    // 已选的频道列表
+    List<int> _SelectedChannel = ref.watch(SelectedChannel);
+    // 未选的频道列表
+    List<int> _NoSelectChannel = ref.watch(NoSelectChannel);
+
     return Padding(
       padding: const EdgeInsets.all(primary_padding),
       child: SingleChildScrollView(
@@ -364,44 +366,43 @@ class Channel extends ConsumerStatefulWidget {
 }
 
 class _ChannelState extends ConsumerState<Channel> with SingleTickerProviderStateMixin {
-  late List<String> _ChannelList = ref.watch(ChannelList);
-  late List<int> _SelectedChannel = ref.watch(SelectedChannel);
-
-  List<String> myChannel = [];
-  // List<String> myChannel = [];
-
-  late int _channelTabLevel = ref.watch(ChannelTabLevel);
-
-  // tab bar 控制器自定义
-  late TabController _channelController;
-
-  // 启动声明周期
-  @override
-  void initState() {
-    super.initState();
-    myChannel.addAll(["推荐","视频","直播"]);
-    myChannel.addAll(
-      List.generate(_SelectedChannel.length, (index)=>_ChannelList[_SelectedChannel[index]])
-    );
-    _channelController = TabController(
-        vsync: this, length: myChannel.length, initialIndex: _channelTabLevel);
-    // 控制器监听tabbar
-    _channelController.addListener(() {
-      ref
-          .read(ChannelTabLevel.notifier)
-          .update((state) => _channelController.index);
-    });
-  }
-
-  // 销毁生命周期
-  @override
-  void dispose() {
-    _channelController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> _ChannelList = ref.watch(ChannelList);
+    List<int> _SelectedChannel = ref.watch(SelectedChannel);
+
+    List<String> myChannel = [];
+    myChannel.addAll(["推荐","视频","直播"]);
+    myChannel.addAll(
+        List.generate(_SelectedChannel.length, (index)=>_ChannelList[_SelectedChannel[index]])
+    );
+    // List<String> myChannel = [];
+
+    int _channelTabLevel = ref.watch(ChannelTabLevel);
+
+    // tab bar 控制器自定义
+    TabController _channelController = TabController(
+    vsync: this, length: myChannel.length, initialIndex: _channelTabLevel);
+
+    // 启动声明周期
+    void initState() {
+      super.initState();
+
+      // 控制器监听tabbar
+      _channelController.addListener(() {
+        ref
+            .read(ChannelTabLevel.notifier)
+            .update((state) => _channelController.index);
+      });
+    }
+    // 销毁生命周期
+    void dispose() {
+      _channelController.dispose();
+      super.dispose();
+    }
+
     return Column(children: [
       Row(
         children: [
@@ -451,9 +452,11 @@ class _ChannelState extends ConsumerState<Channel> with SingleTickerProviderStat
       ),
       Container(
           height: MediaQuery.of(context).size.height -
-              (primary_text_fontSize * 2 +
-                  primary_padding * 26 +
-                  primary_title_fontSize_selected * 2),
+              (
+                  primary_text_fontSize * 2 + primary_padding*2 + // 频道
+                  primary_title_fontSize*4 +  primary_title_fontSize*2 +// 底部
+                  primary_title_fontSize*4 + primary_padding*2 // 导航栏
+              ),
           child: TabBarView(controller: _channelController, children: [
             for (int i = 0; i < myChannel.length; i++)
               // Text("${myChannel[i]}页面")

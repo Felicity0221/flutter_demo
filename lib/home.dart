@@ -32,8 +32,18 @@ class _HomeState extends ConsumerState<Home> {
     int _BottomTabLevel = ref.watch(BottomTabLevel);
     
     bool _isEditChannel = ref.watch(IsEditChannal);
-    print("$_isEditChannel");
+
+    final GlobalKey<ScaffoldState> _homescaffoldKey = GlobalKey<ScaffoldState>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      int _DrawerMenuState = ref.watch(DrawerMenuState);
+      if(_DrawerMenuState==0){
+        _homescaffoldKey.currentState?.openDrawer();
+      }
+    });
+
     return Scaffold(
+      key: _homescaffoldKey,
       resizeToAvoidBottomInset: true,
       onDrawerChanged:(isOpened) => {
         if(!isOpened){
@@ -41,22 +51,14 @@ class _HomeState extends ConsumerState<Home> {
         }
       },
       drawer: Drawer_menu(),
-      body: Consumer(builder: (context, ref, _){
-        // ignore: no_leading_underscores_for_local_identifiers
-        
-        int _DrawerMenuState = ref.watch(DrawerMenuState);
-        if(_DrawerMenuState==0){
-           Scaffold.of(context).openDrawer();
-        }
-        return PageStorage(
-          bucket: _bucket, 
-          child: SafeArea(
-            top: true,
-            bottom: true,
-            child: indexRouterPages[_BottomTabLevel]
-          ),
-        );
-      }),
+      body: PageStorage(
+        bucket: _bucket,
+        child: SafeArea(
+          top: true,
+          bottom: true,
+          child: indexRouterPages[_BottomTabLevel]
+        ),
+      ),
       bottomNavigationBar: _isEditChannel ? null : const Bottom_tab()
     );
   }

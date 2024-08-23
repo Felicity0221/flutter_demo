@@ -185,18 +185,16 @@ class Neighboring extends ConsumerStatefulWidget {
 
 class _NeighboringState extends ConsumerState<Neighboring> {
 
-  late String _NeighboringLocation = ref.watch(NeighboringLocation);
-
-  final List<TabList> _tabList = [
-    TabList("assets/image/icon/food.png", "美食"),
-    TabList("assets/image/icon/playing.png", "玩乐"),
-    TabList("assets/image/icon/landscaping.png", "景点"),
-    TabList("assets/image/icon/sport.png", "运动"),
-    TabList("assets/image/icon/map.png", "地图")
-  ];
-
   @override
   Widget build(BuildContext context) {
+    String _NeighboringLocation = ref.watch(NeighboringLocation);
+    final List<TabList> _tabList = [
+      TabList("assets/image/icon/food.png", "美食"),
+      TabList("assets/image/icon/playing.png", "玩乐"),
+      TabList("assets/image/icon/landscaping.png", "景点"),
+      TabList("assets/image/icon/sport.png", "运动"),
+      TabList("assets/image/icon/map.png", "地图")
+    ];
     return Container(
       color: Color(primary_white),
       child: SingleChildScrollView(

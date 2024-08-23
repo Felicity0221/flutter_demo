@@ -17,34 +17,26 @@ class Index extends ConsumerStatefulWidget {
 }
 
 // 首页
-class _IndexState extends ConsumerState<Index> with SingleTickerProviderStateMixin {
-  // class Index extends StatelessWidget{
-  // _IndexState({super.key});
-  // int _TabIndex = 1;
-  
-  
-  // tab bar 控制器自定义
-  late TabController _tabController;
-  // 启动声明周期
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: 3, initialIndex: ref.watch(IndexTabLevel));
-    // 控制器监听tabbar
-    _tabController.addListener((){
-      ref.read(IndexTabLevel.notifier).update((state)=>_tabController.index);
-    });
-  }
-  // 销毁生命周期
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  
+class _IndexState extends ConsumerState<Index> with TickerProviderStateMixin {
    @override
    Widget build(BuildContext context) {
+
+     // tab bar 控制器自定义
+     late TabController _tabController = TabController(vsync: this, length: 3, initialIndex: ref.watch(IndexTabLevel));
+     // 启动声明周期
+     void initState() {
+       super.initState();
+
+       // 控制器监听tabbar
+       _tabController.addListener((){
+         ref.read(IndexTabLevel.notifier).update((state)=>_tabController.index);
+       });
+     }
+     // 销毁生命周期
+     void dispose() {
+       _tabController.dispose();
+       super.dispose();
+     }
 
     int _IndexTabLevel = ref.watch(IndexTabLevel);
     String _NeighboringLocation = ref.watch(NeighboringLocation);

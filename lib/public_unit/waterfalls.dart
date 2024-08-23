@@ -46,7 +46,7 @@ CardItem(String imgUrl, String title, String name, String avatar,int likes, Buil
           ),
           // 用户&赞
           Padding(
-            padding: const EdgeInsets.all(primary_padding),
+            padding: const EdgeInsets.all(primary_padding/2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
