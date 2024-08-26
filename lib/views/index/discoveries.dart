@@ -407,33 +407,33 @@ class _ChannelState extends ConsumerState<Channel> with SingleTickerProviderStat
       Row(
         children: [
           Expanded(
-              flex: 9,
-              child: TabBar(
-                controller: _channelController,
-                dividerColor: Colors.transparent,
-                isScrollable: true,
-                padding: EdgeInsets.zero,
-                indicatorPadding: EdgeInsets.zero, 
-                tabAlignment: TabAlignment.center,
-                labelColor: const Color(selected),
-                labelPadding: const EdgeInsets.all(primary_padding),
-                labelStyle:
-                    const TextStyle(fontSize: primary_text_fontSize,fontWeight: FontWeight.w600),
-                indicatorColor: Colors.transparent,
-                unselectedLabelColor: const Color(no_seleted),
-                unselectedLabelStyle:
-                    const TextStyle(fontSize: primary_text_fontSize,fontWeight: FontWeight.w400),
-                tabs: [
-                  for (int i = 0; i < myChannel.length; i++)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: primary_padding / 2),
-                      child: Tab(
-                        text: "${myChannel[i]}",
-                      ),
-                    )
-                ],
-              )
+            flex: 9,
+            child: TabBar(
+              controller: _channelController,
+              dividerColor: Colors.transparent,
+              isScrollable: true,
+              padding: EdgeInsets.zero,
+              indicatorPadding: EdgeInsets.zero,
+              tabAlignment: TabAlignment.center,
+              labelColor: const Color(selected),
+              labelPadding: const EdgeInsets.all(primary_padding/2),
+              labelStyle:
+                  const TextStyle(fontSize: primary_text_fontSize,fontWeight: FontWeight.w600),
+              indicatorColor: Colors.transparent,
+              unselectedLabelColor: const Color(no_seleted),
+              unselectedLabelStyle:
+                  const TextStyle(fontSize: primary_text_fontSize,fontWeight: FontWeight.w400),
+              tabs: [
+                for (int i = 0; i < myChannel.length; i++)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: primary_padding / 2),
+                    child: Tab(
+                      text: "${myChannel[i]}",
+                    ),
+                  )
+              ],
+            )
           ),
           Expanded(
             child: IconButton(
@@ -447,13 +447,12 @@ class _ChannelState extends ConsumerState<Channel> with SingleTickerProviderStat
               )
             )
           )
-          
         ],
       ),
       Container(
           height: MediaQuery.of(context).size.height -
               (
-                  primary_text_fontSize * 2 + primary_padding*2 + // 频道
+                  primary_text_fontSize * 2 + primary_padding + // 频道
                   primary_title_fontSize*4 +  primary_title_fontSize*2 +// 底部
                   primary_title_fontSize*4 + primary_padding*2 // 导航栏
               ),
