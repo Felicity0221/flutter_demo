@@ -67,15 +67,11 @@ class ChannelEditLocation extends StatelessWidget{
             ),
             onPressed: ()=>onClose(info), 
             child:  Badge(
-              // label: const Icon(
-              //   ,
-              //   size: primary_text_fontSize/2,
-              // ),
-              label: ImageIcon(
-                AssetImage("assets/image/icon/close.png"),
-                size: primary_text_fontSize
+              label: const Icon(
+                Icons.close,
+                size: primary_text_fontSize/2,
               ),
-              // backgroundColor: Color(primary_img_bgcolor),
+              backgroundColor: Color(primary_img_bgcolor),
               child: ChannelSelect(info: Text(info, style: ChannelTextStyle), bgColor: Color(primary_white)),
             )
           );
